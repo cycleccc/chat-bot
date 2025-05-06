@@ -29,6 +29,8 @@ export function SidebarUserNav({ user }: { user: User }) {
   const { setTheme, theme } = useTheme();
 
   const isGuest = guestRegex.test(data?.user?.email ?? '');
+  debugger
+  console.log("🚀 ~ SidebarUserNav ~ isGuest:", isGuest)
 
   return (
     <SidebarMenu>

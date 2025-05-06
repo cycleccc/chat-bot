@@ -39,38 +39,27 @@ export const {
   ...authConfig,
   providers: [
     Credentials({
-      credentials: {},
-      async authorize({ email, password }: any) {
-        const users = await getUser(email);
-
-        if (users.length === 0) {
-          await compare(password, DUMMY_PASSWORD);
-          return null;
-        }
-
-        const [user] = users;
-
-        if (!user.password) {
-          await compare(password, DUMMY_PASSWORD);
-          return null;
-        }
-
-        const passwordsMatch = await compare(password, user.password);
-
-        if (!passwordsMatch) return null;
-
-        return { ...user, type: 'regular' };
+      id: "custom-redirect",
+      name: "SSO Redirect",
+      credentials: {
+        token: { type: "text" },
+        email: { type: "text" },
+        username: { type: "text" },
       },
-    }),
-    Credentials({
-      id: 'guest',
-      credentials: {},
-      async authorize() {
-        const [guestUser] = await createGuestUser();
-        return { ...guestUser, type: 'guest' };
+      async authorize(credentials, request) {
+        if (credentials?.token && credentials?.email) {
+          return {
+            id: credentials.email as string,
+            name: credentials.username as string,
+            email: credentials.email as string,
+            type: 'regular' as const,
+          };
+        }
+        return null;
       },
     }),
   ],
+  session: { strategy: "jwt" },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
