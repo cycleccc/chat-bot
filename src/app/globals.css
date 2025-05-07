@@ -1,9 +1,6 @@
-@import "tailwindcss";
-
-@theme {
-	--font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
     --foreground-rgb: 0, 0, 0;
@@ -99,11 +96,11 @@
 
 @layer base {
     * {
-        @apply border-[hsl(var(--border))];
+        @apply border-border;
     }
 
     body {
-        @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))];
+        @apply bg-background text-foreground;
     }
 }
 
@@ -112,17 +109,17 @@
         pointer-events: none !important;
     }
 
-    *[class^="text-"] {
+    *[class^='text-'] {
         color: transparent;
-        @apply rounded-md bg-[hsl(var(--foreground)/0.2)] select-none animate-pulse;
+        @apply rounded-md bg-foreground/20 select-none animate-pulse;
     }
 
     .skeleton-bg {
-        @apply bg-[hsl(var(--foreground)/0.1)];
+        @apply bg-foreground/10;
     }
 
     .skeleton-div {
-        @apply bg-[hsl(var(--foreground)/0.2)] animate-pulse;
+        @apply bg-foreground/20 animate-pulse;
     }
 }
 
@@ -132,22 +129,22 @@
 
 .cm-editor,
 .cm-gutters {
-    @apply bg-[hsl(var(--background))] dark:bg-zinc-800 outline-none;
+    @apply bg-background dark:bg-zinc-800 outline-none selection:bg-zinc-900 !important;
 }
 
 .ͼo.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground,
 .ͼo.cm-selectionBackground,
 .ͼo.cm-content::selection {
-    @apply bg-zinc-200 dark:bg-zinc-900;
+    @apply bg-zinc-200 dark:bg-zinc-900 !important;
 }
 
 .cm-activeLine,
 .cm-activeLineGutter {
-    @apply bg-transparent;
+    @apply bg-transparent !important;
 }
 
 .cm-activeLine {
-    @apply rounded-r-sm;
+    @apply rounded-r-sm !important;
 }
 
 .cm-lineNumbers {
@@ -159,7 +156,7 @@
 }
 
 .cm-lineNumbers .cm-activeLineGutter {
-    @apply rounded-l-sm;
+    @apply rounded-l-sm !important;
 }
 
 .suggestion-highlight {

@@ -4,7 +4,7 @@ import { GeistSans, GeistMono } from 'geist/font';
 import { ThemeProvider } from '@/components/theme-provider';
 import { TRPCReactProvider } from '@/trpc/react';
 
-import '@/styles/globals.css';
+import './globals.css';
 import { SessionProvider } from 'next-auth/react';
 
 export const metadata: Metadata = {
