@@ -66,7 +66,6 @@ export const {
         token.id = user.id as string;
         token.type = user.type;
       }
-
       return token;
     },
     async session({ session, token }) {
@@ -74,7 +73,6 @@ export const {
         session.user.id = token.id;
         session.user.type = token.type;
       }
-
       return session;
     },
   },

@@ -16,18 +16,18 @@ import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 
 import {
-    user,
-    chat,
-    type User,
-    document,
-    type Suggestion,
-    suggestion,
-    message,
-    vote,
-    type DBMessage,
-    type Chat,
-    stream,
-} from './schema';
+  user,
+  chat,
+  type User,
+  document,
+  type Suggestion,
+  suggestion,
+  message,
+  vote,
+  type DBMessage,
+  type Chat,
+  stream,
+} from '@/server/db/schema';
 import type { ArtifactKind } from '@/components/artifact';
 import { generateUUID } from '../utils';
 import { generateHashedPassword } from './utils';
@@ -187,6 +187,7 @@ export async function getChatsByUserId({
             hasMore,
         };
     } catch (error) {
+        console.log('🚀 ~ error:', error);
         console.error('Failed to get chats by user from database');
         throw error;
     }
