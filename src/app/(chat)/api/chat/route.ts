@@ -30,7 +30,7 @@ import { postRequestBodySchema, type PostRequestBody } from './schema';
 import { geolocation } from '@vercel/functions';
 import { createResumableStreamContext } from 'resumable-stream';
 import { after } from 'next/server';
-import type { Chat } from '@/lib/db/schema';
+import type { Chat } from '@/server/db/schema';
 
 export const maxDuration = 60;
 
@@ -88,7 +88,7 @@ export async function POST(request: Request) {
         visibility: selectedVisibilityType,
       });
     } else {
-      if (chat.userId !== session.user.id) {
+      if (chat?.userId !== Number.parseInt(session.user.id)) {
         return new Response('Forbidden', { status: 403 });
       }
     }
@@ -176,10 +176,10 @@ export async function POST(request: Request) {
                     {
                       id: assistantId,
                       chatId: id,
-                      role: assistantMessage.role,
-                      parts: assistantMessage.parts,
+                      role: assistantMessage?.role ?? '',
+                      parts: assistantMessage?.parts,
                       attachments:
-                        assistantMessage.experimental_attachments ?? [],
+                        assistantMessage?.experimental_attachments ?? [],
                       createdAt: new Date(),
                     },
                   ],
@@ -201,7 +201,8 @@ export async function POST(request: Request) {
           sendReasoning: true,
         });
       },
-      onError: () => {
+      onError: (err) => {
+        console.error(err);
         return 'Oops, an error occurred!';
       },
     });
@@ -209,7 +210,8 @@ export async function POST(request: Request) {
     return new Response(
       await streamContext.resumableStream(streamId, () => stream),
     );
-  } catch (_) {
+  } catch (error) {
+    console.error(error);
     return new Response('An error occurred while processing your request!', {
       status: 500,
     });
@@ -230,7 +232,7 @@ export async function GET(request: Request) {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  let chat: Chat;
+  let chat: Chat | undefined;
 
   try {
     chat = await getChatById({ id: chatId });
@@ -242,7 +244,10 @@ export async function GET(request: Request) {
     return new Response('Not found', { status: 404 });
   }
 
-  if (chat.visibility === 'private' && chat.userId !== session.user.id) {
+  if (
+    chat.visibility === 'private' &&
+    chat.userId !== Number.parseInt(session.user.id)
+  ) {
     return new Response('Forbidden', { status: 403 });
   }
 
@@ -287,7 +292,7 @@ export async function DELETE(request: Request) {
   try {
     const chat = await getChatById({ id });
 
-    if (chat.userId !== session.user.id) {
+    if (chat?.userId !== Number.parseInt(session.user.id)) {
       return new Response('Forbidden', { status: 403 });
     }
 

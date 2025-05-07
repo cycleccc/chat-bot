@@ -1,9 +1,6 @@
-import { compare } from 'bcrypt-ts';
 import NextAuth, { type DefaultSession } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { createGuestUser, getUser } from '@/lib/db/queries';
 import { authConfig } from './auth.config';
-import { DUMMY_PASSWORD } from '@/lib/constants';
 import type { DefaultJWT } from 'next-auth/jwt';
 
 export type UserType = 'guest' | 'regular';
@@ -39,12 +36,12 @@ export const {
   ...authConfig,
   providers: [
     Credentials({
-      id: "custom-redirect",
-      name: "SSO Redirect",
+      id: 'custom-redirect',
+      name: 'SSO Redirect',
       credentials: {
-        token: { type: "text" },
-        email: { type: "text" },
-        username: { type: "text" },
+        token: { type: 'text' },
+        email: { type: 'text' },
+        username: { type: 'text' },
       },
       async authorize(credentials, request) {
         if (credentials?.token && credentials?.email) {
@@ -59,7 +56,7 @@ export const {
       },
     }),
   ],
-  session: { strategy: "jwt" },
+  session: { strategy: 'jwt' },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {

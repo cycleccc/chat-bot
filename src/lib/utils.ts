@@ -1,7 +1,7 @@
 import type { CoreAssistantMessage, CoreToolMessage, UIMessage } from 'ai';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import type { Document } from '@/lib/db/schema';
+import type { Document } from '@/server/db/schema';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -75,5 +75,5 @@ export function getTrailingMessageId({
 }
 
 export function sanitizeText(text: string) {
-    return text.replace('<has_function_call>', '');
+  return text.replace('<has_function_call>', '');
 }

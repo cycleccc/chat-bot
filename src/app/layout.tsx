@@ -2,8 +2,9 @@ import { Toaster } from 'sonner';
 import type { Metadata } from 'next';
 import { GeistSans, GeistMono } from 'geist/font';
 import { ThemeProvider } from '@/components/theme-provider';
+import { TRPCReactProvider } from '@/trpc/react';
 
-import "@/styles/globals.css";
+import '@/styles/globals.css';
 import { SessionProvider } from 'next-auth/react';
 
 export const metadata: Metadata = {
@@ -69,7 +70,9 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <Toaster position="top-center" />
-          <SessionProvider>{children}</SessionProvider>
+          <TRPCReactProvider>
+            <SessionProvider>{children}</SessionProvider>
+          </TRPCReactProvider>
         </ThemeProvider>
       </body>
     </html>
