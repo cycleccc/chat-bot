@@ -1,3 +1,32 @@
+# Vercel AI Chatbot 复刻项目
+
+本项目是基于 [T3 Stack](https://create.t3.gg/) 对 [Vercel AI Chatbot](https://github.com/vercel/ai-chatbot) 的复刻实现。
+
+## 项目说明
+
+- 使用 T3 脚手架重新实现了 Vercel AI Chatbot 的功能
+- 已适配公司 SSO 系统，对用户注册登录逻辑进行了相应调整
+- 项目可以直接运行，只需配置相应的环境变量即可
+
+## 环境变量配置
+
+请确保配置以下环境变量：
+
+```env
+# 数据库配置
+DATABASE_URL=""
+
+# 认证相关
+NEXTAUTH_SECRET=""
+NEXTAUTH_URL=""
+
+# AI 服务配置
+OPENAI_API_KEY=""
+
+# 其他必要的环境变量...
+```
+
+
 # Create Vercel Chat Bot By T3 APP
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
